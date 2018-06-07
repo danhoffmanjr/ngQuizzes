@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { QuizService } from '../quiz.service';
 
 @Component({
   selector: 'app-question',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuestionComponent implements OnInit {
 
-  constructor() { }
+  constructor(private quizService: QuizService) { }
+
+  question: any = {};
+
+  post(question) {
+    this.quizService.postQuestion(question);
+  }
 
   ngOnInit() {
   }

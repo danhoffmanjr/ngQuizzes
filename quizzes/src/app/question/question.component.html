@@ -1,1 +1,12 @@
-<button mat-button>Material Button</button>
+<mat-card>
+  <mat-card-content>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <input matInput [(ngModel)]="question.text" name="question" placeholder="Question" value="">
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="post(question)">Post</button>
+  </mat-card-actions>
+</mat-card>
