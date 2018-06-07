@@ -5,8 +5,17 @@
         <input matInput [(ngModel)]="question.text" name="question" placeholder="Question" value="">
       </mat-form-field>
       <mat-form-field class="full-width">
-          <input matInput [(ngModel)]="question.correctAnswer" name="correctAnswer" placeholder="Correct Answer" value="">
-        </mat-form-field>
+        <input matInput [(ngModel)]="question.answer" name="answer" placeholder="Correct Answer" value="">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput [(ngModel)]="question.wrongAnswer1" name="wrongAnswer1" placeholder="Wrong Answer 1" value="">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput [(ngModel)]="question.wrongAnswer2" name="wrongAnswer2" placeholder="Wrong Answer 2" value="">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput [(ngModel)]="question.wrongAnswer3" name="wrongAnswer3" placeholder="Wrong Answer 3" value="">
+      </mat-form-field>
     </form>
   </mat-card-content>
   <mat-card-actions>
