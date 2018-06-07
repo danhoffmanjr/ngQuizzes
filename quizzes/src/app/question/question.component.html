@@ -1,9 +1,12 @@
 <mat-card>
   <mat-card-content>
     <form class="example-form">
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="full-width">
         <input matInput [(ngModel)]="question.text" name="question" placeholder="Question" value="">
       </mat-form-field>
+      <mat-form-field class="full-width">
+          <input matInput [(ngModel)]="question.correctAnswer" name="correctAnswer" placeholder="Correct Answer" value="">
+        </mat-form-field>
     </form>
   </mat-card-content>
   <mat-card-actions>

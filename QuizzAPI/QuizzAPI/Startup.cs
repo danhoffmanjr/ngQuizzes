@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using QuizzAPI.Data;
 
 namespace QuizzAPI
 {
@@ -30,6 +32,8 @@ namespace QuizzAPI
                 .AllowAnyMethod();
 
             }));
+
+            services.AddDbContext<QuizContext>(options => options.UseInMemoryDatabase("quizDb"));
 
             services.AddMvc();
         }
