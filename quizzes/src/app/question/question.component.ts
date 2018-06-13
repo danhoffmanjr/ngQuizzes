@@ -16,7 +16,12 @@ export class QuestionComponent implements OnInit {
     this.quizService.postQuestion(question);
   }
 
+  update(question) {
+    this.quizService.updateQuestion(question);
+  }
+
   ngOnInit() {
+    this.quizService.questionSelected.subscribe(question => this.question = question);
   }
 
 }
