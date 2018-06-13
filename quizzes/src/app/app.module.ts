@@ -1,31 +1,44 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatInputModule, MatCheckboxModule, MatCardModule, MatListModule} from '@angular/material';
+import {MatButtonModule, MatInputModule, MatCheckboxModule, MatCardModule, MatListModule, MatToolbarModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 import { QuizService } from './quiz.service';
 import { AppComponent } from './app.component';
 import { QuestionComponent } from './question/question.component';
 import { QuestionsComponent } from './question/questions.component';
+import { HomeComponent } from './home/home.component';
+import { NavComponent } from './nav/nav.component';
+
+const routes = [
+  { path: '', component: HomeComponent },
+  { path: 'question', component: QuestionComponent },
+  { path: 'questions', component: QuestionsComponent }
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     QuestionComponent,
-    QuestionsComponent
+    QuestionsComponent,
+    HomeComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    RouterModule.forRoot(routes),
     BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatInputModule,
     MatCardModule,
-    MatListModule
+    MatListModule,
+    MatToolbarModule
   ],
   providers: [
     QuizService
