@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QuizzAPI.Data;
 using QuizzAPI.Models;
 
@@ -23,19 +24,31 @@ namespace QuizzAPI.Controllers
         [HttpGet]
         public IEnumerable<Question> Get()
         {
-            return new Question[] {
-                new Question() { Id = 1, Text = "Question One" },
-                new Question() { Id = 2, Text = "Question Two" }
-            };
+            return _context.Questions;
         }
 
         // POST: api/Questions
         [HttpPost]
-        public void Post([FromBody]Question question)
+        public async Task<IActionResult> Post([FromBody]Question question)
         {
             _context.Questions.Add(question);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return Ok(question);
         }
-        
+
+        // PUT api/values/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody]Question question)
+        {
+            if (id != question.Id) {
+                return BadRequest("Question does not exist to modify.");
+            }
+
+            _context.Entry(question).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return Ok(question);
+        }
+
     }
 }
