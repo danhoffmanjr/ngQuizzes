@@ -13,12 +13,14 @@ import { QuestionsComponent } from './question/questions.component';
 import { HomeComponent } from './home/home.component';
 import { NavComponent } from './nav/nav.component';
 import { QuizComponent } from './quiz/quiz.component';
+import { QuizzesComponent } from './quiz/quizzes.component';
 
 const routes = [
   { path: '', component: HomeComponent },
   { path: 'question', component: QuestionComponent },
   { path: 'questions', component: QuestionsComponent },
-  { path: 'quiz', component: QuizComponent }
+  { path: 'newQuiz', component: QuizComponent },
+  { path: 'quiz/:id', component: QuizComponent }
 ];
 
 @NgModule({
@@ -28,7 +30,8 @@ const routes = [
     QuestionsComponent,
     HomeComponent,
     NavComponent,
-    QuizComponent
+    QuizComponent,
+    QuizzesComponent
   ],
   imports: [
     BrowserModule,

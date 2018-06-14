@@ -12,6 +12,7 @@ export class QuizService {
 
   private selected = new Subject<any>();
   questionSelected = this.selected.asObservable();
+  quizSelected = this.selected.asObservable();
   
   constructor(private http: HttpClient) { }
 
@@ -35,6 +36,14 @@ export class QuizService {
       .subscribe(res => console.log(res));
   }
 
+  selectQuestion(question) {
+    this.selected.next(question);
+  }
+
+  getQuizzes() {
+    return this.http.get(this.quizzesUrl);
+  }
+
   postQuiz(quiz) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -43,8 +52,8 @@ export class QuizService {
       .subscribe(res => console.log(res));
   }
 
-  selectQuestion(question) {
-    this.selected.next(question);
+  selectQuiz(quiz) {
+    this.selected.next(quiz);
   }
 
 }
