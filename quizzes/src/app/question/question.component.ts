@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Location } from '@angular/common';
 import { QuizService } from '../quiz.service';
 import { ActivatedRoute } from '@angular/router';
@@ -11,16 +12,22 @@ import { Subscription } from 'rxjs';
 })
 export class QuestionComponent implements OnInit {
 
-  constructor(private quizService: QuizService, private route: ActivatedRoute, private location: Location) {
+  constructor(private quizService: QuizService, private route: ActivatedRoute, private location: Location, private fb: FormBuilder) {
 
   }
 
   isNew: Boolean;
   id: number;
   quizId: number;
+  questionForm: FormGroup;
   question: object = {};
   private sub: Subscription;
 
+  getQuestion(id) {
+    this.quizService.getQuestionById(id)
+      .subscribe(payload => this.question = payload);
+  }
+  
   post(question) {
     question.quizId = this.quizId;
     this.quizService.postQuestion(question);
@@ -40,9 +47,7 @@ export class QuestionComponent implements OnInit {
     } else {
       this.isNew = false;
       console.log('Editing question ' + this.id + ' for quiz ' + this.quizId);
-      this.question = {
-        'id': this.id
-      }
+      this.getQuestion(this.id);
     }
   }
 
