@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -44,11 +45,26 @@ export class QuizService {
     return this.http.get(this.quizzesUrl);
   }
 
+  getQuizById(id): Observable<any> {
+    return this.http.get(this.quizzesUrl + `/${id}`);
+  }
+
+  getQuizQuestions(id): Observable<any> {
+    return this.http.get(this.quizzesUrl + `/${id}/questions`)
+  }
+
   postQuiz(quiz) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
-    this.http.post(this.quizzesUrl, quiz, httpOptions)
+    return this.http.post(this.quizzesUrl, quiz, httpOptions);
+  }
+
+  updateQuiz(quiz) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    this.http.put(this.quizzesUrl + `/${quiz.id}`, quiz, httpOptions)
       .subscribe(res => console.log(res));
   }
 

@@ -1,18 +1,27 @@
 <mat-card>
   <mat-card-title>
-    <span *ngIf="quiz.id">Edit Quiz</span>
+    <span *ngIf="quiz.id">Quiz Title</span>
     <span *ngIf="!quiz.id">New Quiz</span>
   </mat-card-title>
   <mat-card-content>
-    <form class="example-form">
+    <form class="example-form" [formGroup]="quizForm" novalidate>
       <mat-form-field class="full-width">
-        <input matInput [(ngModel)]="quiz.title" name="title" placeholder="Quiz Title" value="">
+        <input matInput formControlName="title" placeholder="Quiz Title" required>
       </mat-form-field>
+      <div *ngIf="(quizForm.get('title').touched || quizForm.get('title').dirty) && quizForm.get('title').errors">
+          <span *ngIf="quizForm.get('title').errors.required">
+            Please enter a Quiz Title
+          </span>
+        </div>
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button *ngIf="!quiz.id" (click)="quizService.postQuiz(quiz)">Post</button>
-    <button mat-button *ngIf="quiz.id" (click)="null">UPDATE</button>
-    <button mat-button *ngIf="quiz.id" (click)="quiz = {}">Cancel</button>
+    <button mat-raised-button color="primary" *ngIf="!quiz.id" (click)="post(quizForm.value)" [disabled]="!quizForm.valid">Post</button>
+    <button mat-button *ngIf="quiz.id && quizForm.get('title').dirty" (click)="update(quiz)" [disabled]="!quizForm.valid">Update title</button>
+    <button mat-button *ngIf="quiz.id" [routerLink]="['/quizzes', quiz.id, 'questions', 0]">Add Question</button>
   </mat-card-actions>
+  <mat-card-title>Questions</mat-card-title>
+  <mat-card-content>
+    <app-questions [data]="questions"></app-questions>
+  </mat-card-content>
 </mat-card>

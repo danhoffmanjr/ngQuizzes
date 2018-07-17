@@ -20,11 +20,30 @@ namespace QuizzAPI.Controllers
             _context = context;
         }
         
-        // GET api/values
+        // GET api/questions
         [HttpGet]
         public IEnumerable<Question> Get()
         {
             return _context.Questions;
+        }
+
+        // GET: api/Question/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetQuestionById([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var question = await _context.Questions.SingleOrDefaultAsync(m => m.Id == id);
+
+            if (question == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(question);
         }
 
         // POST: api/Questions

@@ -37,7 +37,30 @@ namespace QuizzAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var quiz = await _context.Quizzes.SingleOrDefaultAsync(m => m.Id == id);
+            var quiz = await _context.Quizzes
+                .Include(q => q.Questions)
+                .SingleOrDefaultAsync(m => m.Id == id);
+
+            if (quiz == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(quiz);
+        }
+
+        // GET: api/Quiz/5/questions
+        [HttpGet("{id}/quiestions")]
+        public async Task<IActionResult> GetQuizQuestions([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var quiz = await _context.Quizzes
+                .Include(q => q.Questions)
+                .SingleOrDefaultAsync(m => m.Id == id);
 
             if (quiz == null)
             {

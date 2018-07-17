@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { QuizService } from '../quiz.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-questions',
@@ -8,15 +9,30 @@ import { QuizService } from '../quiz.service';
 })
 export class QuestionsComponent implements OnInit {
 
-  questions;
+  private _data = new BehaviorSubject<any>([]);
   
-  constructor(private quizService : QuizService) { }
+  questions;
+
+  constructor() { }
+
+  @Input()
+  set data(value) {
+    // set the latest value for _data BehaviorSubject
+    this._data.next(value);
+  };
+
+  get data() {
+    // get the latest value from _data BehaviorSubject
+    return this._data.getValue();
+  }
+
 
   ngOnInit() {
-    this.quizService.getQuestions()
-      .subscribe(res => this.questions = res);
+    this._data.subscribe(x => this.questions = x);
+  }
 
-    console.log(this.questions);
+  ngOnDestroy() {
+    this._data.unsubscribe();
   }
 
 }
